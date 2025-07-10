@@ -1,0 +1,429 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengumuman Kelolosan CMPK</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+<style>
+/* general styling */
+:root {
+  --smaller: .75;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+    margin: 70px 0;
+  align-items: center;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+    }
+
+
+input{padding:5px;margin:5px;width:80%}
+.container {
+    background-color: #FFFFFF;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+    }
+
+    .container h1 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #cc4125;
+    }
+
+    .container h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #cc4125;
+    }
+
+    .container h3 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #cc4125;
+    }
+
+    .container img {
+      width: 100px;
+      margin-bottom: 20px;
+    }
+
+    .container input[type="text"] {
+      width: 100%;
+      padding: 12px 20px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 2px solid #cf9f85;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #cc4125;
+      transition: border-color 0.3s;
+    }
+
+    .container input[type="text"]:focus {
+      border-color: #ecdbc4;
+      outline: none;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    .result.success {
+      background-color: #2ecc71;
+      color: white;
+    }
+
+    .result.fail {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    
+        /* Footer */
+        .footer {
+            background: #c0392b;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #3498db;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #3498db;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+    .loading {
+      margin-top: 20px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      .container h1 {
+        font-size: 20px;
+      }
+    }
+
+@media all and (max-width: 768px) {
+  h1 {font-size: calc(1.7rem * var(--smaller));}
+  li {font-size: calc(1.3rem * var(--smaller));}
+  li span {font-size: calc(4rem * var(--smaller));}
+  #borderHitungMundur{width:90%}
+  #borderHasil{width:90%}
+}
+.tombol{
+	background-color: #3498db;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 91%;
+  transition: background-color 0.3s;
+}
+
+.container tombol:hover {
+      background-color: #2980b9;
+      align-items: center;
+    }
+
+#loading{
+  width:100%;
+  height:100%;
+  z-index:999;
+  background:black;
+  opacity:0.5;
+  top:0px;
+  position:fixed;
+  text-align: center;
+  color:white;
+  display:none;
+}
+.loadingText{
+  position:relative;
+  top:70%;
+}
+.sekolah{
+  color:#FFB43D;
+}
+#cpr a{
+  color:white;
+  text-decoration: none;
+  font-weight:bold;
+}
+</style>
+</head>
+<body>
+<div id="loading">
+  <span class="loadingText"><img src="https://i.gifer.com/origin/34/34338d26023e5515f6cc8969aa027bca_w200.gif" height="50px"/><br/>Loading Data ... </span>
+</div>
+
+<div class="container">
+	
+  <div id="hitungmundur" style="display:none">
+		<h1 id="judul1"></h1>
+    <h2 class="sekolah"></h2>
+		<div id="borderHitungMundur" style="margin:20px auto;padding:10px;max-width:440px;border:1px solid white;border-radius:5px;">
+		<ul>
+		  <li><span id="hari"></span>hari</li>
+		  <li><span id="jam"></span>jam</li>
+		  <li><span id="menit"></span>menit</li>
+		  <li><span id="detik"></span>detik</li>
+		</ul>
+		</div>
+	</div>
+  
+	<div id="konten" style="display:none;">
+		<h1 id="judul2"></h1>
+    <h2 class="sekolah"></h2>
+		<div id="login" style="margin:10px auto;padding:20px 5px;max-width:440px;border:1px solid white;border-radius:5px;">
+      <h3 id="peringatan" style="color:#111111"></h3>
+			<div class="row">
+				<i class="fas fa-user"></i>
+				<input onclick="hapusPeringatan()" id="pass" type="text" placeholder="Masukkan Nama" required>
+			</div>
+			<div class="row">
+        <i class="fas fa-key"></i>
+				<input onclick="hapusPeringatan()" id="nis" type="text" placeholder="Masukkan NIS" required>
+			</div>
+			<div class="tombol" onclick="login()">LOGIN</div>
+		</div>
+	</div>
+	
+	<div id="pengumuman" style="display:none;">
+		<h1 id="judul3"></h1>
+    <h2 class="sekolah"></h2>
+    <div id="borderHasil" style="margin:20px auto;padding:20px 10px;max-width:440px;background:white;color:black">
+      <h2>Nama: <span id="tampilNis"></span></h2>
+      <h3>NIS: <span id="tampilNama"></span></h3>
+      <h3>Kelas: <span id="tampilKelas"></span></h3>
+      <h2>Hasil Kelolosan: <span id="tampilLulus"></span></h2>
+      <h3><span id="tampilLink"></span></h3>
+      <div class="tombol" onclick="awal();">LOGOUT</div>
+    </div>
+	</div>
+  <div id="cpr" style="display:none"></div>
+</div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 MPKSMADA</p>
+        </div>
+    </footer>
+
+<script>
+// SETTING (SILAKAN EDIT)
+var namaSekolah = "SMA NEGERI 2 PURWOKERTO";
+var judul1 = "MENUJU PENGUMUMAN KELOLOSAN";
+var judul2 = "PENGUMUMAN KELOLOSAN ANGGOTA CALON MUSYAWARAH PERWAKILAN KELAS";
+var judul3 = "HASIL PENGUMUMAN KELOLOSAN ANGGOTA CALON MUSYAWARAH PERWAKILAN KELAS";
+var waktuAkhir = new Date("May 24, 2023 20:36:00").getTime();
+
+// Mulai baris ini ke bawah, jangan diedit
+document.getElementsByClassName("sekolah")[0].innerHTML = namaSekolah;
+document.getElementById("judul1").innerHTML = judul1;
+document.getElementsByClassName("sekolah")[1].innerHTML = namaSekolah;
+document.getElementById("judul2").innerHTML = judul2;
+document.getElementsByClassName("sekolah")[2].innerHTML = namaSekolah;
+document.getElementById("judul3").innerHTML = judul3;
+document.getElementById("cpr").innerHTML = window.atob("djIuMCCpIDIwMjMgfCBTdWJzY3JpYmUgQ2hhbm5lbCA8Yj5UdWdhcyBFbnRlbmc8L2I+IHlhIQ==")
+document.getElementById("nis").value = "";
+document.getElementById("pass").value = "";
+
+// cek sudah login atau belum
+if(bacaCookie('status')=="login" && bacaCookie("us") != ""){
+  document.getElementById("loading").style.display="block";
+  google.script.run.withSuccessHandler(hasilLogin).login(bacaCookie('us'), bacaCookie('pw'));
+}else{
+  //document.getElementById("peringatan").innerHTML = "Silakan Login dengan NIS dan Nama";
+  //document.getElementById("konten").style.display="block";
+  //document.getElementById("cpr").style.display="none";
+  // Fungsi menghitung mundur
+  var x = setInterval(function() {
+
+    // Catat waktu sekarang
+    var sekarang = new Date().getTime();
+      
+    // Mencari selisih
+    var selisih = waktuAkhir - sekarang;
+      
+    // Time calculations for days, hours, minutes and seconds
+    var hari = Math.floor(selisih / (1000 * 60 * 60 * 24));
+    var jam = Math.floor((selisih % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var menit = Math.floor((selisih % (1000 * 60 * 60)) / (1000 * 60));
+    var detik = Math.floor((selisih % (1000 * 60)) / 1000);
+      
+    // Output the result in an element with id="demo"
+    document.getElementById("hari").innerHTML = hari;
+    document.getElementById("jam").innerHTML = jam;
+    document.getElementById("menit").innerHTML = menit;
+    document.getElementById("detik").innerHTML = detik;
+      
+    // If the count down is over, write some text 
+    if (selisih < 0) {
+      clearInterval(x);
+      document.getElementById("hitungmundur").style.display="none";
+      document.getElementById("peringatan").innerHTML = "Silakan Login dengan NIS dan Nama";
+      document.getElementById("konten").style.display="block";
+      document.getElementById("cpr").style.display="none";
+    }else{
+      document.getElementById("hitungmundur").style.display="block";
+      document.getElementById("konten").style.display="none";
+      document.getElementById("cpr").style.display="none";
+    }
+  }, 1000);
+}
+
+var expiration = "09/09/2023 23:59:59";
+function tulisCookie(namaCookie, isiCookie){
+  expiration = new Date(expiration).toUTCString();
+  document.cookie = namaCookie+"="+isiCookie+";path=/;expires="+expiration+";SameSite=None;secure";
+}
+function bacaCookie(namaCookie) {
+  var name = namaCookie + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i <ca.length; i++) {
+  var c = ca[i];
+  while (c.charAt(0) == ' ') {
+    c = c.substring(1);
+  }
+  if (c.indexOf(name) == 0) {
+    return c.substring(name.length, c.length);
+  }
+  }
+  return "";
+}
+
+function login(){
+  document.getElementById("loading").style.display="block";
+	pass = document.getElementById("pass").value;
+	nis = document.getElementById("nis").value;
+	if(nis == "" || pass == ""){
+    document.getElementById("loading").style.display="none";
+		document.getElementById("peringatan").innerHTML = "TIDAK BOLEH KOSONG";
+	}else{
+		//alert("NIS: "+nis+" Pass: "+pass)
+    google.script.run.withSuccessHandler(hasilLogin).login(nis, pass);
+	}
+}
+
+function hasilLogin(status){
+  //document.getElementById("peringatan").innerHTML = status;
+    if(status == "NOUSER"){
+        document.getElementById("peringatan").innerHTML = "USER TIDAK DITEMUKAN";
+        document.getElementById("loading").style.display="none";
+        document.getElementById("nis").value = "";
+	      document.getElementById("pass").value = "";
+    }else if(status == "FAILED"){
+        document.getElementById("peringatan").innerHTML = "PASTIKAN NIS & Nama BENAR";
+        document.getElementById("loading").style.display="none";
+        document.getElementById("nis").value = "";
+	      document.getElementById("pass").value = "";
+    }else{
+        // split status
+        data = status.split("#");
+        brs = data[1];
+        google.script.run.withSuccessHandler(tampilHasil).baca(brs);
+
+        //document.getElementById("peringatan").innerHTML = "BERHASIL";
+        //document.getElementById("loading").style.display="none";
+        tulisCookie("status","login");
+        if(bacaCookie("us")==""){
+          tulisCookie("us",document.getElementById("pass").value);
+        }
+        if(bacaCookie("pw")==""){
+          tulisCookie("pw",document.getElementById("nis").value);
+        }
+        document.getElementById("nis").value = "";
+	      document.getElementById("pass").value = "";
+    }
+}
+
+function tampilHasil(status){
+  document.getElementById("konten").style.display="none";
+  document.getElementById("cpr").style.display="none";
+  document.getElementById("pengumuman").style.display="block";
+  
+  data = status.split("#");
+  document.getElementById("tampilNama").innerHTML = data[1];
+  document.getElementById("tampilNis").innerHTML = data[0];
+  document.getElementById("tampilKelas").innerHTML = data[2];
+  document.getElementById("tampilLulus").innerHTML = data[3];
+
+  document.getElementById("loading").style.display="none";
+}
+
+function  hapusPeringatan(){
+  document.getElementById("peringatan").innerHTML = "";
+}
+
+function awal(){
+  document.getElementById("nis").value = "";
+	document.getElementById("pass").value = "";
+  document.getElementById("konten").style.display="block";
+  document.getElementById("pengumuman").style.display="none";
+  tulisCookie("status","logout");
+  tulisCookie("us","");
+  tulisCookie("pw","");
+  document.getElementById("peringatan").innerHTML = "Anda sudah logout.";
+}
+
+
+</script>
+</body>
+</html>
