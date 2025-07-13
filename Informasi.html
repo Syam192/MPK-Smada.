@@ -24,7 +24,6 @@
             backdrop-filter: blur(25px);
             position: fixed;
             width: 100%;
-            top: 0;
             z-index: 1000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s ease;
@@ -200,19 +199,35 @@
         }
 
         /* About Section */
-        .about {
+        .about2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             padding: 3rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             margin-bottom: 2rem;
         }
-
-        .about-content {
+        .about {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            gap: 2rem;
+        }
+
+        .about-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);      
+        }
+
+        .about-content2 {
+
             align-items: center;
+            padding: 2rem;
         }
 
         .about-text h3 {
@@ -224,9 +239,21 @@
         .about-text p {
             margin-bottom: 1rem;
             color: #666;
-            font-size: 1.1rem;
+            font-size: 1.5rem;
         }
 
+        .about-text2 h3 {
+            font-size: 1.9rem;
+            margin-bottom: 1rem;
+            color: #000000;
+
+        }
+        .about-text2 p {
+            margin-bottom: 1rem;
+            color: #000000;
+            font-size: 1.7rem;
+        }
+        
         .about-image {
             height: 300px;
             background: linear-gradient(45deg, #3498db, #2980b9);
@@ -554,7 +581,7 @@
             <a href="#" class="logo"><img src="MPK2.png" width="75px" height="70px" style="border-radius: 50%">
             <nav> 
                 <ul class="nav-menu" id="nav-menu">
-                    <li><a href="index.html" class="nav-link">Beranda</a></li>
+                    <li><a href="Beranda.html" class="nav-link">Beranda</a></li>
                     <li><a href="Tentang Kami.html" class="nav-link">Tentang Kami</a></li>
                     <li><a href="Informasi.html" class="nav-link">Informasi</a></li>
                     <li><a href="Pengumuman.html" class="nav-link">Pengumuman</a></li>
@@ -564,59 +591,51 @@
         </div>
     </header>
 
-    <!-- Services Section -->
-    <section class="section" id="services">
+
+            <!-- About Section -->
+    <section class="section" id="about">
         <br>
         <br>
         <br>
         <h2 class="section-title">Informasi</h2>
-            <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                            <img class="img_deg"><img src="MPK2.png" width="250px" height="240px" style="border-radius: 50%">
-                <h2>PENGERTIAN</h2>
-                <div class="stat-label">Musyawarah Perwakilan Kelas (MPK) merupakan suatu organisasi di SMA Negeri 2 Purwokerto yang bertugas menyalurkan aspirasi dari seluruh warga sekolah dan mengevaluasi setiap program kerja ekstrakurikuler serta organisasi yang ada di SMA Negeri 2 Purwokerto.</div>
-           
+            <div class="about2">
+            <div class="about-content2">
+                <div class="about-text2">
+                    <h3></h3>
+                    <p>Dalam rangka mengembangkan potensi, karakter, serta kreativitas siswa di berbagai bidang, MPK SMADA membagi unit-unit kegiatan ke dalam empat komisi utama. Setiap komisi memiliki fokus tersendiri, dengan unit-unit kegiatan yang mendukung visi dan tujuan masing-masing.</p>
+                </div>
             </div>
         </div>
-    </section>
-
-        <h2 class="section-title">Program Kerja</h2>
-        <div class="services-grid">
-
-            <div class="service-card">
-                <div class="service-icon">💼</div>
-                <h4>PILKAOS</h4>
-                <p>Pemilihan Ketua OSIS, adalah program kerja yang ada di MPK untuk memilih ketua OSIS di SMA Negeri 2 Purwokerto dengan menggunakan suara seluruh warga sekolah.</p>
+        <h2 class="section-title">Struktur Komisi dan Bidang Kegiatan Siswa</h2>
+        <div class="about">
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Komisi A</h3>
+                    <p>OPPK (Organisasi Pendidikan Politik dan Kepemimpinan) merupakan wadah bagi siswa yang memiliki minat dalam bidang kepemimpinan, organisasi, dan pengembangan diri. Unit-unit di bawah OPPK meliputi: Coscoda, Paskibra, Paspara, Smart Kir, OSIS</p>
+                </div>
             </div>
-            <div class="service-card">
-                <div class="service-icon">⚙</div>
-                <h4>FORKSA</h4>
-                <p>Forum Komunikasi Sekolah, adalah program kerja MPK yang menampung aspirasi dari warga sekolah dan menyampaikan aspirasi tersebut ke pihak sekolah</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Komisi B</h3>
+                    <p>KJDK (Kesehatan Jasmani dan Daya Kreasi) menaungi unit-unit yang bergerak di bidang kesehatan, olahraga, dan kreativitas serta KK (Keterampilan Kewirausahaan) merupakan bidang yang fokus pada pengembangan jiwa kewirausahaan siswa.Unit-unit tersebut adalah: PMR (Palang Merah Remaja), PIK-R (Pusat Informasi dan Konseling Remaja), Majalah Pelajar (MP), Bola Smada, Basket</p>
+                </div>
             </div>
-            <div class="service-card">
-                <div class="service-icon">📊</div>
-                <h4>FKB</h4>
-                <p>Forum Komunikasi Berkelanjutan, adalah wadah yang bertujuan untuk menampung aspirasi, menyampaikan kendala, dan mengusulkan saran guna meningkatkan efektivitas kegiatan organisasi dan ekstrakurikuler di lingkungan sekolah.</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Komisi C</h3>
+                    <p>KBPL (Kepribadian Budi Pekerti Luhur) fokus pada pembentukan karakter siswa yang berakhlak mulia.KTTYME (Ketaqwaan Terhadap Tuhan Yang Maha Esa) menaungi kegiatan keagamaan yang membina iman dan spiritualitas siswa dari berbagai agama. Unit-unitnya meliputi: Unit yang bernaung di bawah bidang ini adalah: Adiwiyata, Rohis (Islam), Rohkris (Kristen), Rohkat (Katolik)</p>
+                </div>
             </div>
-            <div class="service-card">
-                <div class="service-icon">🎯</div>
-                <h4>MISERA</h4>
-                <p>Mid Semester Aspiration, adalah salah satu program kerja dari MPK SMADA. Yang berfokus pada aspirasi warga SMADA yang nantinya akan diteruskan kepada pihak sekolah selama setiap 1 semester sekali</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🔧</div>
-                <h4>Hari Keakraban</h4>
-                <p>Hari Keakraban, adalah program kerja yang dirancang khusus bagi para anggota MPK. Program kerja ini berfungsi untuk meningkatkan keakraban serta kemampuan bekerjasama antar anggota MPK.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">🚀</div>
-                <h4>ANJANGSINI EKSTERNAL</h4>
-                <p>Anjangsini Eksternal, yaitu kegiatan kunjungan dari MPK sekolah lain ke MPK SMADA untuk saling bertukar informasi seputar MPK di sekolah masing-masing.</p>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Komisi D</h3>
+                    <p>PAKS (Presepsi Apresiasi Kreasi Seni) mewadahi berbagai ekspresi seni dan media kreatif siswa.PPBN (Pendidikan Pendahuluan Bela Negara) adalah bidang yang berfokus pada penanaman nilai nasionalisme dan bela negara. Unit-unit yang tergabung di dalamnya adalah: Excel (Desain dan Multimedia), Teater Pijar (Drama), Esbanda, Esvo, Sekarnada (Musik), FOS, JUMP, CHAOS (Redaksi dan Media)</p>
+                </div>
             </div>
         </div>
+
     </section>
+
 
 
     <!-- Footer -->
