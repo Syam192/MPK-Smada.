@@ -21,6 +21,117 @@
             align-items: center;
             padding: 20px;
         }
+
+        /* Header & Navigation */
+        .header {
+            background: rgb(110, 1, 1);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container2 {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo2 {
+            display: table;
+        }
+
+        .img_deg  {
+        float: left;
+        }
+
+        .header.scrolled .logo2 {
+            color: #2c3e50;
+            text-shadow: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .header.scrolled .nav-link {
+            color: #2c3e50;
+            text-shadow: none;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #ffffff, #e74c3c);
+            transition: width 0.3s ease;
+        }
+
+        .header.scrolled .nav-link::after {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .header.scrolled .nav-link:hover {
+            color: #3498db;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled .mobile-menu-toggle {
+            color: #dd463c;
+        }
+
         
         .container {
             display: flex;
@@ -28,6 +139,7 @@
             gap: 30px;
             width: 100%;
             max-width: 1200px;
+            margin-top: 100px; /* Tambahkan margin top untuk memberikan jarak dari header */
         }
         
         .login-container {
@@ -250,7 +362,7 @@
         }
         
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color:  #f9f9f9;
         }
         
         tr:hover {
@@ -293,6 +405,7 @@
             visibility: hidden;
             transition: all 0.3s;
         }
+
         
         .popup-overlay.active {
             opacity: 1;
@@ -361,10 +474,21 @@
             font-weight: 700;
         }
         
-        .popup-snpmb-tidak-lolos .popup-body h3 {
+        .popup-snpmb-tidak-lolos .student-info h3 {
             color: #cc0000;
         }
+
+        .popup-snpmb-lolos .student-info h3 {
+            color: #0056b3;
+        }
+
         
+        .divider {
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+
         .popup-body p {
             font-size: 16px;
             line-height: 1.6;
@@ -373,11 +497,11 @@
         }
         
         .student-info {
-            background-color: #f8f9fa;
-            padding: 15px;
+            background: white;
             border-radius: 10px;
-            margin: 20px 0;
-            text-align: left;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         
         .student-info p {
@@ -497,9 +621,16 @@
                 font-size: 14px;
             }
             
-            .popup {
-                width: 95%;
-            }
+        .popup {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 600px;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: all 0.3s;
+        }
             
             .popup-header {
                 padding: 20px;
@@ -575,21 +706,40 @@
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo2"><img src="Sman2.png" width="50px" height="50px" style="border-radius: 50%">
+            
+            <a href="#" class="logo2"><img src="Image/MPK2.png" width="60px" height="56px" style="border-radius: 50%">
+            <nav> 
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="Beranda.html" class="nav-link">Beranda</a></li>
+                    <li><a href="Tentang Kami.html" class="nav-link">Tentang Kami</a></li>
+                    <li><a href="Informasi.html" class="nav-link">Informasi</a></li>
+                    <li><a href="Pengumuman.html" class="nav-link">Pengumuman</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
     <!-- Popup SNPMB Lolos -->
     <div class="popup-overlay" id="snpmbLolosPopup">
         <div class="popup popup-snpmb">
             <div class="popup-header">
-                <h2>SNPMB</h2>
-                <p>TAMPILAN LAMAN MELALUH</p>
+                <h2>BCMPK'20</h2>
+                <p>SELEKSI BCMPK'20</p>
                 <div class="popup-icon">
                     <i class="fas fa-check-circle"></i>
                 </div>
                 <div class="watermark">LOLOS</div>
             </div>
-            <div class="popup-body">
+            <div class="student-info">
                 <h3>SELAMAT! ANDA DINYATAKAN LOLOS</h3>
                 <p>Anda telah memenuhi persyaratan dan dinyatakan lolos seleksi.</p>
-                
+
+                <div class="div"></div>
                 <div class="student-info">
                     <p>Nama: <span id="snpmbNama">-</span></p>
                     <p>NIS: <span id="snpmbNis">-</span></p>
@@ -609,14 +759,14 @@
     <div class="popup-overlay" id="snpmbTidakLolosPopup">
         <div class="popup popup-snpmb-tidak-lolos">
             <div class="popup-header">
-                <h2>SNPMB</h2>
-                <p>TAMPILAN LAMAN MELALUH</p>
+                <h2>BCMPK'20</h2>
+                <p>SELEKSI BCMPK'20</p>
                 <div class="popup-icon">
                     <i class="fas fa-times-circle"></i>
                 </div>
                 <div class="watermark">GAGAL</div>
             </div>
-            <div class="popup-body">
+            <div class="student-info">
                 <h3>MAAF! ANDA DINYATAKAN TIDAK LOLOS</h3>
                 <p>Anda belum memenuhi persyaratan untuk lolos seleksi.</p>
                 
@@ -627,7 +777,7 @@
                     <p>Status: <span id="snpmbStatusGagal">TIDAK LOLOS</span></p>
                 </div>
                 
-                <p>Terima kasih telah berpartisipasi. Anda dapat mencoba lagi di kesempatan berikutnya.</p>
+                <p>Terima kasih telah berpartisipasi. Tetap semangat.</p>
             </div>
             <div class="popup-footer">
                 <button class="popup-btn" onclick="closePopup('snpmbTidakLolosPopup')">Mengerti</button>
@@ -655,6 +805,7 @@
         </div>
     </div>
 
+    
     <div class="container">
         <div class="login-container">
             <div class="logo">BC</div>
@@ -778,7 +929,7 @@
             { no: 40, nis: "", name: "Muhammad Fitzal Asfa Musakfar", class: "X-6", status: "TIDAK LOLOS" },
             { no: 41, nis: "25378", name: "Noraya Aquilla", class: "X-6", status: "TIDAK LOLOS" },
             { no: 42, nis: "", name: "Raisya Asadyl Azhar", class: "X-6", status: "TIDAK LOLOS" },
-            { no: 43, nis: "25384", name: "Saskia Dwi Ananta", class: "X-6", status: "LOLOS" },
+            { no: 43, nis: "25384", name: "Saskia Dwi Anantara", class: "X-6", status: "LOLOS" },
             { no: 44, nis: "25385", name: "Syifana Amalia Zahra", class: "X-6", status: "LOLOS" },
             { no: 45, nis: "25386", name: "Ahmad Rifai", class: "X-7", status: "TIDAK LOLOS" },
             { no: 46, nis: "25395", name: "Charles Rajendra Elvaretta", class: "X-7", status: "TIDAK LOLOS" },
