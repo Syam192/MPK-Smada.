@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Siswa - BCMPK'20</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 40px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #333;
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .login-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: #1a2a6c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.2);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 40px;
+            color: #999;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus + .input-icon {
+            color: #1a2a6c;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(26, 42, 108, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(26, 42, 108, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s;
+            height: 0;
+        }
+        
+        .error-message.show {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+        }
+        
+        .validation-hints {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #1a2a6c;
+        }
+        
+        .validation-hints h3 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .validation-hints ul {
+            list-style: none;
+            padding-left: 5px;
+        }
+        
+        .validation-hints li {
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .validation-hints li i {
+            color: #1a2a6c;
+            font-size: 12px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .data-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            padding: 30px;
+            margin: 0 auto;
+            overflow-x: auto;
+        }
+        
+        .data-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .data-header h2 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .status-lolos {
+            color: #27ae60;
+            font-weight: 600;
+        }
+        
+        .status-tidak-lolos {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+        
+        .note {
+            background-color: #fff9e6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+            border-left: 4px solid #fdbb2d;
+        }
+        
+        /* Popup Styles SNPMB */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .popup {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 90%;
+            max-width: 500px;
+            overflow: hidden;
+            transform: scale(0.8);
+            transition: all 0.3s;
+        }
+        
+        .popup-overlay.active .popup {
+            transform: scale(1);
+        }
+        
+        .popup-header {
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            color: white;
+        }
+        
+        .popup-snpmb {
+            background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+        }
+        
+        .popup-snpmb-tidak-lolos {
+            background: linear-gradient(135deg, #cc0000 0%, #ff3333 100%);
+        }
+        
+        .popup-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .popup-header p {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .popup-icon {
+            font-size: 70px;
+            margin: 20px 0;
+            color: white;
+        }
+        
+        .popup-body {
+            padding: 30px;
+            text-align: center;
+            color: #333;
+        }
+        
+        .popup-body h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #0056b3;
+            font-weight: 700;
+        }
+        
+        .popup-snpmb-tidak-lolos .popup-body h3 {
+            color: #cc0000;
+        }
+        
+        .popup-body p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        .student-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .student-info p {
+            margin: 8px 0;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .student-info span {
+            font-weight: 600;
+            color: #007bff;
+        }
+        
+        .popup-snpmb-tidak-lolos .student-info span {
+            color: #cc0000;
+        }
+        
+        .popup-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .popup-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #0056b3;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+        
+        .popup-snpmb-tidak-lolos .popup-btn {
+            background: #cc0000;
+            box-shadow: 0 4px 10px rgba(204, 0, 0, 0.3);
+        }
+        
+        .popup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+        }
+        
+        .popup-snpmb-tidak-lolos .popup-btn:hover {
+            box-shadow: 0 6px 15px rgba(204, 0, 0, 0.4);
+        }
+        
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+        }
+        
+        .input-error {
+            border-color: #e74c3c !important;
+        }
+        
+        .input-success {
+            border-color: #2ecc71 !important;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 40px;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .login-container, .data-container {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .data-container {
+                padding: 15px;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            .popup {
+                width: 95%;
+            }
+            
+            .popup-header {
+                padding: 20px;
+            }
+            
+            .popup-header h2 {
+                font-size: 24px;
+            }
+            
+            .popup-icon {
+                font-size: 50px;
+            }
+            
+            .popup-body {
+                padding: 20px;
+            }
+            
+            .popup-body h3 {
+                font-size: 20px;
+            }
+            
+            .watermark {
+                font-size: 80px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            .login-header h1 {
+                font-size: 28px;
+            }
+            
+            th, td {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+            
+            .popup-header {
+                padding: 15px;
+            }
+            
+            .popup-header h2 {
+                font-size: 20px;
+            }
+            
+            .popup-header p {
+                font-size: 16px;
+            }
+            
+            .popup-body {
+                padding: 15px;
+            }
+            
+            .popup-body h3 {
+                font-size: 18px;
+            }
+            
+            .student-info {
+                padding: 10px;
+            }
+            
+            .student-info p {
+                font-size: 14px;
+            }
+            
+            .watermark {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Popup SNPMB Lolos -->
+    <div class="popup-overlay" id="snpmbLolosPopup">
+        <div class="popup popup-snpmb">
+            <div class="popup-header">
+                <h2>SNPMB</h2>
+                <p>TAMPILAN LAMAN MELALUH</p>
+                <div class="popup-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <div class="watermark">LOLOS</div>
+            </div>
+            <div class="popup-body">
+                <h3>SELAMAT! ANDA DINYATAKAN LOLOS</h3>
+                <p>Anda telah memenuhi persyaratan dan dinyatakan lolos seleksi.</p>
+                
+                <div class="student-info">
+                    <p>Nama: <span id="snpmbNama">-</span></p>
+                    <p>NIS: <span id="snpmbNis">-</span></p>
+                    <p>Kelas: <span id="snpmbKelas">-</span></p>
+                    <p>Status: <span id="snpmbStatus">LOLOS</span></p>
+                </div>
+                
+                <p>Silakan lanjutkan ke tahap berikutnya sesuai dengan jadwal yang telah ditentukan.</p>
+            </div>
+            <div class="popup-footer">
+                <button class="popup-btn" onclick="closePopup('snpmbLolosPopup')">Mengerti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup SNPMB Tidak Lolos -->
+    <div class="popup-overlay" id="snpmbTidakLolosPopup">
+        <div class="popup popup-snpmb-tidak-lolos">
+            <div class="popup-header">
+                <h2>SNPMB</h2>
+                <p>TAMPILAN LAMAN MELALUH</p>
+                <div class="popup-icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div class="watermark">GAGAL</div>
+            </div>
+            <div class="popup-body">
+                <h3>MAAF! ANDA DINYATAKAN TIDAK LOLOS</h3>
+                <p>Anda belum memenuhi persyaratan untuk lolos seleksi.</p>
+                
+                <div class="student-info">
+                    <p>Nama: <span id="snpmbNamaGagal">-</span></p>
+                    <p>NIS: <span id="snpmbNisGagal">-</span></p>
+                    <p>Kelas: <span id="snpmbKelasGagal">-</span></p>
+                    <p>Status: <span id="snpmbStatusGagal">TIDAK LOLOS</span></p>
+                </div>
+                
+                <p>Terima kasih telah berpartisipasi. Anda dapat mencoba lagi di kesempatan berikutnya.</p>
+            </div>
+            <div class="popup-footer">
+                <button class="popup-btn" onclick="closePopup('snpmbTidakLolosPopup')">Mengerti</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Warning -->
+    <div class="popup-overlay" id="warningPopup">
+        <div class="popup popup-snpmb-tidak-lolos">
+            <div class="popup-header">
+                <h2>PERINGATAN</h2>
+                <div class="popup-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+            </div>
+            <div class="popup-body">
+                <h3>DATA TIDAK LENGKAP</h3>
+                <p>Harap isi semua field dengan format yang benar.</p>
+                <p>Pastikan Anda telah mengisi nama lengkap dan NIS dengan benar.</p>
+            </div>
+            <div class="popup-footer">
+                <button class="popup-btn" onclick="closePopup('warningPopup')">Mengerti</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="login-container">
+            <div class="logo">BC</div>
+            <div class="login-header">
+                <h1>Login Siswa BCMPK'20</h1>
+                <p>Masukkan nama dan NIS Anda untuk mengakses sistem</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Nama Lengkap</label>
+                    <input type="text" id="username" placeholder="Masukkan nama lengkap" required>
+                    <div class="input-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div id="usernameError" class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Nama harus diisi</span>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">NIS</label>
+                    <input type="password" id="password" placeholder="Masukkan NIS (5 digit)" required>
+                    <div class="input-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <span class="password-toggle" id="passwordToggle">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                    <div id="passwordError" class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>NIS harus 5 digit angka</span>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+            </form>
+            
+            <div class="validation-hints">
+                <h3><i class="fas fa-info-circle"></i> Informasi Login</h3>
+                <ul>
+                    <li><i class="fas fa-check"></i> Gunakan nama lengkap sebagai username</li>
+                    <li><i class="fas fa-check"></i> NIS harus terdiri dari 5 digit angka</li>
+                    <li><i class="fas fa-check"></i> Lihat tabel di bawah untuk data siswa</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="data-container">
+            <div class="data-header">
+                <h2><i class="fas fa-table"></i> Data Siswa BCMPK'20</h2>
+                <p>Berikut adalah data nama dan NIS siswa BCMPK'20</p>
+            </div>
+            
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>NIS</th>
+                        <th>Nama</th>
+                        <th>Kelas</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data akan diisi oleh JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="note">
+                <p><strong>Catatan:</strong> Data ini diambil dari file "REKAP DATA BCMPK'20 DAN NIS 2-2.xlsx".</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data siswa dari file Excel
+        const studentData = [
+            { no: 1, nis: "25173", name: "Aini Nur Marifah", class: "X-1", status: "LOLOS" },
+            { no: 2, nis: "25177", name: "Bonifasius Dimas Martin", class: "X-1", status: "LOLOS" },
+            { no: 3, nis: "25183", name: "Hasna Shiella Nur Hafidzah", class: "X-1", status: "LOLOS" },
+            { no: 4, nis: "25186", name: "Muhammad Revan Ramadhani Nuris", class: "X-1", status: "LOLOS" },
+            { no: 5, nis: "", name: "R. Jagadhita C", class: "X-1", status: "TIDAK LOLOS" },
+            { no: 6, nis: "", name: "Rulif Audris Dzulfiqar", class: "X-1", status: "TIDAK LOLOS" },
+            { no: 7, nis: "25204", name: "Yasmin Farah Ailatu Wiam", class: "X-1", status: "TIDAK LOLOS" },
+            { no: 8, nis: "25213", name: "Betari Lylafazya Ambalika", class: "X-2", status: "LOLOS" },
+            { no: 9, nis: "25214", name: "Damar Putra Aufar", class: "X-2", status: "LOLOS" },
+            { no: 10, nis: "25215", name: "Deka Afrianto", class: "X-2", status: "TIDAK LOLOS" },
+            { no: 11, nis: "25216", name: "Desta Bagus Pratama", class: "X-2", status: "LOLOS" },
+            { no: 12, nis: "25226", name: "Fidhel Augusta Fadhilah", class: "X-2", status: "TIDAK LOLOS" },
+            { no: 13, nis: "25231", name: "Kyran Aqila Lida", class: "X-2", status: "LOLOS" },
+            { no: 14, nis: "25235", name: "Merliyan Balqis Aquino", class: "X-2", status: "TIDAK LOLOS" },
+            { no: 15, nis: "25237", name: "Nabil Adwa Putra", class: "X-2", status: "TIDAK LOLOS" },
+            { no: 16, nis: "25246", name: "Aisha Hana Naira", class: "X-3", status: "TIDAK LOLOS" },
+            { no: 17, nis: "25248", name: "Almira Alycia Nasywa", class: "X-3", status: "LOLOS" },
+            { no: 18, nis: "25249", name: "Alyya Azka Sarifah", class: "X-3", status: "LOLOS" },
+            { no: 19, nis: "25250", name: "Angelina Devin Suntoro", class: "X-3", status: "LOLOS" },
+            { no: 20, nis: "25253", name: "Avisa Marva Athaya", class: "X-3", status: "TIDAK LOLOS" },
+            { no: 21, nis: "25255", name: "Bilqis Ihdaa Ni'amii", class: "X-3", status: "TIDAK LOLOS" },
+            { no: 22, nis: "25274", name: "Safira Asari Eka Putri", class: "X-3", status: "TIDAK LOLOS" },
+            { no: 23, nis: "25279", name: "Zalfa Muna Azizah", class: "X-3", status: "TIDAK LOLOS" },
+            { no: 24, nis: "25287", name: "Ardhitya Bagus Aji Saputra", class: "X-4", status: "TIDAK LOLOS" },
+            { no: 25, nis: "25294", name: "Edra Dzaka Andes", class: "X-4", status: "TIDAK LOLOS" },
+            { no: 26, nis: "25297", name: "Harits Anandra Prabhaswara", class: "X-4", status: "TIDAK LOLOS" },
+            { no: 27, nis: "", name: "Hasna Ferian Saffura", class: "X-4", status: "TIDAK LOLOS" },
+            { no: 28, nis: "25305", name: "Mikhael Oktaviano Mardiana", class: "X-4", status: "TIDAK LOLOS" },
+            { no: 29, nis: "25307", name: "Nur Fauzi", class: "X-4", status: "TIDAK LOLOS" },
+            { no: 30, nis: "25310", name: "Rajbani Abdillah", class: "X-4", status: "LOLOS" },
+            { no: 31, nis: "25316", name: "Alauddin Suko Ramatory", class: "X-5", status: "TIDAK LOLOS" },
+            { no: 32, nis: "25335", name: "Maritza Almira Khansa Giva Maraville", class: "X-5", status: "TIDAK LOLOS" },
+            { no: 33, nis: "25334", name: "Mada Putra Sandiyudha", class: "X-5", status: "TIDAK LOLOS" },
+            { no: 34, nis: "25336", name: "Muhammad Davine Aydin Elfreda", class: "X-5", status: "LOLOS" },
+            { no: 35, nis: "25337", name: "Mukti Dini Junaedi", class: "X-5", status: "TIDAK LOLOS" },
+            { no: 36, nis: "25338", name: "Nanang Tri Satrio", class: "X-5", status: "TIDAK LOLOS" },
+            { no: 37, nis: "25347", name: "Shiva Bimbim Gimnastyar", class: "X-5", status: "TIDAK LOLOS" },
+            { no: 38, nis: "25358", name: "Cessa Cahaya Rahmadhani", class: "X-6", status: "TIDAK LOLOS" },
+            { no: 39, nis: "25367", name: "Husna Dwi Khairunnisa", class: "X-6", status: "TIDAK LOLOS" },
+            { no: 40, nis: "", name: "Muhammad Fitzal Asfa Musakfar", class: "X-6", status: "TIDAK LOLOS" },
+            { no: 41, nis: "25378", name: "Noraya Aquilla", class: "X-6", status: "TIDAK LOLOS" },
+            { no: 42, nis: "", name: "Raisya Asadyl Azhar", class: "X-6", status: "TIDAK LOLOS" },
+            { no: 43, nis: "25384", name: "Saskia Dwi Ananta", class: "X-6", status: "LOLOS" },
+            { no: 44, nis: "25385", name: "Syifana Amalia Zahra", class: "X-6", status: "LOLOS" },
+            { no: 45, nis: "25386", name: "Ahmad Rifai", class: "X-7", status: "TIDAK LOLOS" },
+            { no: 46, nis: "25395", name: "Charles Rajendra Elvaretta", class: "X-7", status: "TIDAK LOLOS" },
+            { no: 47, nis: "25396", name: "Chigra Apta Nirbhaya", class: "X-7", status: "LOLOS" },
+            { no: 48, nis: "25397", name: "Danish Fairuz Elang", class: "X-7", status: "TIDAK LOLOS" },
+            { no: 49, nis: "25400", name: "Fadhiana Putri Latifa", class: "X-7", status: "LOLOS" },
+            { no: 50, nis: "25405", name: "Maulana Hafidz Afifudin", class: "X-7", status: "LOLOS" },
+            { no: 51, nis: "25408", name: "Mizanul Fikri Al Afgani", class: "X-7", status: "TIDAK LOLOS" },
+            { no: 52, nis: "25427", name: "Aqila Ath Thahira Zahra", class: "X-8", status: "TIDAK LOLOS" },
+            { no: 53, nis: "25431", name: "Aufar Briihan Ebrahimi", class: "X-8", status: "LOLOS" },
+            { no: 54, nis: "25433", name: "Dzaky Fadilatur Rohman", class: "X-8", status: "TIDAK LOLOS" },
+            { no: 55, nis: "", name: "Intan Aprilia Dewi", class: "X-8", status: "TIDAK LOLOS" },
+            { no: 56, nis: "25442", name: "Isya Patih Romadhon", class: "X-8", status: "TIDAK LOLOS" },
+            { no: 57, nis: "25445", name: "Labib Noval Apriliano", class: "X-8", status: "TIDAK LOLOS" },
+            { no: 58, nis: "25450", name: "Renaisans Vedanada", class: "X-8", status: "TIDAK LOLOS" },
+            { no: 59, nis: "25457", name: "Anissa Oktafiana Putri", class: "X-9", status: "TIDAK LOLOS" },
+            { no: 60, nis: "25465", name: "Delicia Taffy Fitrian", class: "X-9", status: "LOLOS" },
+            { no: 61, nis: "25469", name: "Haidar Al Aziia", class: "X-9", status: "TIDAK LOLOS" },
+            { no: 62, nis: "25474", name: "Khonsa Tsabita Khoirunnisa", class: "X-9", status: "LOLOS" },
+            { no: 63, nis: "25481", name: "Nurlita", class: "X-9", status: "TIDAK LOLOS" },
+            { no: 64, nis: "25491", name: "Vanessa Angelina", class: "X-9", status: "TIDAK LOLOS" },
+            { no: 65, nis: "25492", name: "Vendri Yumna", class: "X-9", status: "LOLOS" },
+            { no: 66, nis: "25494", name: "Aira Mezzaluna Mustofa", class: "X-10", status: "LOLOS" },
+            { no: 67, nis: "25496", name: "Alyaa Najla Azaitun", class: "X-10", status: "TIDAK LOLOS" },
+            { no: 68, nis: "25498", name: "Athaya Yumna Quinnsya", class: "X-10", status: "TIDAK LOLOS" },
+            { no: 69, nis: "25504", name: "Cressa Alia Nugroho", class: "X-10", status: "LOLOS" },
+            { no: 70, n
