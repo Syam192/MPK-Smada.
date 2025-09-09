@@ -764,4 +764,108 @@
         });
 
         // Event listener untuk form login
-        document.getElementById('loginForm').addEventListener('submit', function(e
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            
+            let isValid = true;
+            
+            // Reset error states
+            usernameError.classList.remove('show');
+            passwordError.classList.remove('show');
+            usernameInput.classList.remove('input-error', 'input-success');
+            passwordInput.classList.remove('input-error', 'input-success');
+            
+            // Validasi username
+            if (username === '') {
+                usernameError.classList.add('show');
+                usernameInput.classList.add('input-error');
+                usernameInput.classList.add('shake');
+                isValid = false;
+                
+                // Remove shake animation after it completes
+                setTimeout(() => {
+                    usernameInput.classList.remove('shake');
+                }, 500);
+            } else {
+                usernameInput.classList.add('input-success');
+            }
+            
+            // Validasi password (NIS)
+            if (password === '' || !/^\d{5}$/.test(password)) {
+                passwordError.classList.add('show');
+                passwordInput.classList.add('input-error');
+                passwordInput.classList.add('shake');
+                isValid = false;
+                
+                // Remove shake animation after it completes
+                setTimeout(() => {
+                    passwordInput.classList.remove('shake');
+                }, 500);
+            } else {
+                passwordInput.classList.add('input-success');
+            }
+            
+            if (!isValid) {
+                // Tampilkan popup peringatan jika validasi gagal
+                showPopup('warningPopup', 'Harap isi semua field dengan format yang benar');
+                return;
+            }
+            
+            // Validasi login
+            const student = validateLogin(username, password);
+            
+            if (student) {
+                // Login berhasil
+                showPopup('successPopup', `Selamat datang ${student.name} (${student.class})`);
+                
+                // Simulasi pengalihan halaman
+                setTimeout(() => {
+                    closePopup('successPopup');
+                }, 3000);
+            } else {
+                // Login gagal
+                usernameInput.classList.remove('input-success');
+                passwordInput.classList.remove('input-success');
+                usernameInput.classList.add('input-error');
+                passwordInput.classList.add('input-error');
+                usernameInput.classList.add('shake');
+                passwordInput.classList.add('shake');
+                
+                // Tampilkan popup error
+                showPopup('errorPopup', 'Nama atau NIS tidak sesuai');
+                
+                // Remove shake animation after it completes
+                setTimeout(() => {
+                    usernameInput.classList.remove('shake');
+                    passwordInput.classList.remove('shake');
+                }, 500);
+            }
+        });
+        
+        // Menghilangkan pesan error saat user mulai mengetik
+        document.getElementById('username').addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                document.getElementById('usernameError').classList.remove('show');
+                this.classList.remove('input-error');
+            }
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value.trim() !== '' && /^\d{5}$/.test(this.value.trim())) {
+                document.getElementById('passwordError').classList.remove('show');
+                this.classList.remove('input-error');
+            }
+        });
+
+        // Mengisi tabel data siswa saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', populateStudentTable);
+    </script>
+</body>
+</html>
