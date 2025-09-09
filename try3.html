@@ -733,7 +733,6 @@
         </div>
     </div>
 
-
     <script>
         // Data siswa dari file Excel
         const studentData = [
@@ -848,25 +847,26 @@
             return foundStudent;
         }
 
-        // Fungsi untuk menampilkan popup
-        function showPopup(popupId, message = '') {
-            const popup = document.getElementById(popupId);
-            
-            if (message && popupId === 'successPopup') {
-                document.getElementById('successMessage').textContent = message;
-            } else if (message && popupId === 'errorPopup') {
-                document.getElementById('errorMessage').textContent = message;
-            } else if (message && popupId === 'warningPopup') {
-                document.getElementById('warningMessage').textContent = message;
+        // Fungsi untuk menampilkan popup SNPMB
+        function showSnpmbPopup(student, isLolos) {
+            if (isLolos) {
+                document.getElementById('snpmbNama').textContent = student.name;
+                document.getElementById('snpmbNis').textContent = student.nis;
+                document.getElementById('snpmbKelas').textContent = student.class;
+                document.getElementById('snpmbStatus').textContent = student.status;
+                document.getElementById('snpmbLolosPopup').classList.add('active');
+            } else {
+                document.getElementById('snpmbNamaGagal').textContent = student.name;
+                document.getElementById('snpmbNisGagal').textContent = student.nis || '-';
+                document.getElementById('snpmbKelasGagal').textContent = student.class;
+                document.getElementById('snpmbStatusGagal').textContent = student.status;
+                document.getElementById('snpmbTidakLolosPopup').classList.add('active');
             }
-            
-            popup.classList.add('active');
         }
 
         // Fungsi untuk menutup popup
         function closePopup(popupId) {
-            const popup = document.getElementById(popupId);
-            popup.classList.remove('active');
+            document.getElementById(popupId).classList.remove('active');
         }
 
         // Toggle password visibility
@@ -936,7 +936,7 @@
             
             if (!isValid) {
                 // Tampilkan popup peringatan jika validasi gagal
-                showPopup('warningPopup', 'Harap isi semua field dengan format yang benar');
+                document.getElementById('warningPopup').classList.add('active');
                 return;
             }
             
@@ -944,13 +944,8 @@
             const student = validateLogin(username, password);
             
             if (student) {
-                // Login berhasil
-                showPopup('successPopup', `Selamat datang ${student.name} (${student.class})`);
-                
-                // Simulasi pengalihan halaman
-                setTimeout(() => {
-                    closePopup('successPopup');
-                }, 3000);
+                // Login berhasil - tampilkan popup sesuai status
+                showSnpmbPopup(student, student.status === 'LOLOS');
             } else {
                 // Login gagal
                 usernameInput.classList.remove('input-success');
@@ -961,7 +956,7 @@
                 passwordInput.classList.add('shake');
                 
                 // Tampilkan popup error
-                showPopup('errorPopup', 'Nama atau NIS tidak sesuai');
+                document.getElementById('warningPopup').classList.add('active');
                 
                 // Remove shake animation after it completes
                 setTimeout(() => {
