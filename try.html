@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Siswa - Sistem Akademik</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .login-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            margin: 0 auto;
+        }
+        
+        .data-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .login-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .login-header p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            border-color: #2575fc;
+            outline: none;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #2575fc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #1a65e0;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .data-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .data-header h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+        
+        .note {
+            background-color: #fff9e6;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .login-container, .data-container {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-header">
+                <h1>Login Siswa</h1>
+                <p>Masukkan nama dan NISN Anda untuk mengakses sistem</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Nama Lengkap</label>
+                    <input type="text" id="username" placeholder="Masukkan nama lengkap" required>
+                    <div id="usernameError" class="error-message">Nama harus diisi</div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">NISN</label>
+                    <input type="password" id="password" placeholder="Masukkan NISN" required>
+                    <div id="passwordError" class="error-message">NISN harus diisi dan berupa 10 digit angka</div>
+                </div>
+                
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <div class="footer">
+                <p>Gunakan data dari tabel di bawah untuk login percobaan</p>
+            </div>
+        </div>
+        
+        <div class="data-container">
+            <div class="data-header">
+                <h2>Data Siswa untuk Testing</h2>
+                <p>Berikut adalah data nama dan NISN acak yang dapat digunakan untuk login</p>
+            </div>
+            
+            <table id="studentsTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Lengkap</th>
+                        <th>NISN</th>
+                        <th>Kelas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Data akan diisi oleh JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="note">
+                <p><strong>Catatan:</strong> Ini adalah data acak untuk keperluan testing. Pada aplikasi nyata, data akan diambil dari database sekolah.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data siswa acak untuk keperluan testing
+        const studentData = [
+            { name: "Ahmad Rizky", nisn: "0061234567", class: "XII IPA 1" },
+            { name: "Siti Rahayu", nisn: "0062345678", class: "XII IPS 2" },
+            { name: "Budi Santoso", nisn: "0063456789", class: "XI IPA 3" },
+            { name: "Dewi Lestari", nisn: "0064567890", class: "X IPS 1" },
+            { name: "Indra Pratama", nisn: "0065678901", class: "XII IPA 2" },
+            { name: "Maya Sari", nisn: "0066789012", class: "XI IPS 1" },
+            { name: "Rizki Ramadhan", nisn: "0067890123", class: "X IPA 3" },
+            { name: "Fitri Anggraini", nisn: "0068901234", class: "XII IPS 3" },
+            { name: "Hendra Setiawan", nisn: "0069012345", class: "XI IPA 1" },
+            { name: "Lina Wati", nisn: "0060123456", class: "X IPA 1" }
+        ];
+
+        // Fungsi untuk mengisi tabel dengan data siswa
+        function populateStudentTable() {
+            const tableBody = document.querySelector('#studentsTable tbody');
+            
+            studentData.forEach((student, index) => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${student.name}</td>
+                    <td>${student.nisn}</td>
+                    <td>${student.class}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Fungsi untuk memvalidasi login
+        function validateLogin(username, password) {
+            // Cek apakah username dan password cocok dengan data siswa
+            const foundStudent = studentData.find(student => 
+                student.name.toLowerCase() === username.toLowerCase() && 
+                student.nisn === password
+            );
+            
+            return foundStudent;
+        }
+
+        // Event listener untuk form login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            let isValid = true;
+            
+            // Validasi username
+            if (username === '') {
+                document.getElementById('usernameError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('usernameError').style.display = 'none';
+            }
+            
+            // Validasi password (NISN)
+            if (password === '' || !/^\d{10}$/.test(password)) {
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+            
+            if (isValid) {
+                // Validasi login
+                const student = validateLogin(username, password);
+                
+                if (student) {
+                    // Login berhasil
+                    alert(`Login berhasil! Selamat datang ${student.name} (${student.class})`);
+                    // Di aplikasi nyata, di sini akan ada pengalihan halaman
+                    // window.location.href = 'dashboard.html';
+                } else {
+                    // Login gagal
+                    alert('Login gagal! Nama atau NISN tidak sesuai. Silakan coba lagi.');
+                }
+            }
+        });
+        
+        // Menghilangkan pesan error saat user mulai mengetik
+        document.getElementById('username').addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                document.getElementById('usernameError').style.display = 'none';
+            }
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value.trim() !== '' && /^\d{10}$/.test(this.value.trim())) {
+                document.getElementById('passwordError').style.display = 'none';
+            }
+        });
+
+        // Mengisi tabel data siswa saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', populateStudentTable);
+    </script>
+</body>
+</html>
