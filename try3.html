@@ -733,6 +733,7 @@
         </div>
     </div>
 
+
     <script>
         // Data siswa dari file Excel
         const studentData = [
@@ -805,4 +806,188 @@
             { no: 67, nis: "25496", name: "Alyaa Najla Azaitun", class: "X-10", status: "TIDAK LOLOS" },
             { no: 68, nis: "25498", name: "Athaya Yumna Quinnsya", class: "X-10", status: "TIDAK LOLOS" },
             { no: 69, nis: "25504", name: "Cressa Alia Nugroho", class: "X-10", status: "LOLOS" },
-            { no: 70, n
+            { no: 70, nis: "25523", name: "Riana Puspitasari", class: "X-10", status: "TIDAK LOLOS" },
+            { no: 71, nis: "25527", name: "Zyzy Kanaya Ayu Putri", class: "X-10", status: "TIDAK LOLOS" },
+            { no: 72, nis: "25538", name: "Dalilah Salsabila Claresta", class: "X-11", status: "LOLOS" },
+            { no: 73, nis: "25540", name: "Elvina Nadia Putri", class: "X-11", status: "TIDAK LOLOS" },
+            { no: 74, nis: "25541", name: "Hans Arkana Faishal Afif", class: "X-11", status: "LOLOS" },
+            { no: 75, nis: "25542", name: "Helena Trisha Briliantin", class: "X-11", status: "TIDAK LOLOS" },
+            { no: 76, nis: "25543", name: "Hibatullah Al Musyaffa Adiputra", class: "X-11", status: "TIDAK LOLOS" },
+            { no: 77, nis: "25551", name: "Meysila Pristan Esya", class: "X-11", status: "LOLOS" },
+            { no: 78, nis: "25554", name: "Muthia Salma", class: "X-11", status: "TIDAK LOLOS" },
+            { no: 79, nis: "25563", name: "Yessi Yuaniar Damarani", class: "X-11", status: "TIDAK LOLOS" }
+        ];
+
+        // Fungsi untuk mengisi tabel dengan data siswa
+        function populateStudentTable() {
+            const tableBody = document.querySelector('#studentsTable tbody');
+            
+            studentData.forEach((student) => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${student.no}</td>
+                    <td>${student.nis || '-'}</td>
+                    <td>${student.name}</td>
+                    <td>${student.class}</td>
+                    <td class="${student.status === 'LOLOS' ? 'status-lolos' : 'status-tidak-lolos'}">${student.status}</td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Fungsi untuk memvalidasi login
+        function validateLogin(username, password) {
+            // Cek apakah username dan password cocok dengan data siswa
+            const foundStudent = studentData.find(student => 
+                student.name.toLowerCase() === username.toLowerCase() && 
+                student.nis === password
+            );
+            
+            return foundStudent;
+        }
+
+        // Fungsi untuk menampilkan popup
+        function showPopup(popupId, message = '') {
+            const popup = document.getElementById(popupId);
+            
+            if (message && popupId === 'successPopup') {
+                document.getElementById('successMessage').textContent = message;
+            } else if (message && popupId === 'errorPopup') {
+                document.getElementById('errorMessage').textContent = message;
+            } else if (message && popupId === 'warningPopup') {
+                document.getElementById('warningMessage').textContent = message;
+            }
+            
+            popup.classList.add('active');
+        }
+
+        // Fungsi untuk menutup popup
+        function closePopup(popupId) {
+            const popup = document.getElementById(popupId);
+            popup.classList.remove('active');
+        }
+
+        // Toggle password visibility
+        document.getElementById('passwordToggle').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Event listener untuk form login
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const usernameError = document.getElementById('usernameError');
+            const passwordError = document.getElementById('passwordError');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            
+            let isValid = true;
+            
+            // Reset error states
+            usernameError.classList.remove('show');
+            passwordError.classList.remove('show');
+            usernameInput.classList.remove('input-error', 'input-success');
+            passwordInput.classList.remove('input-error', 'input-success');
+            
+            // Validasi username
+            if (username === '') {
+                usernameError.classList.add('show');
+                usernameInput.classList.add('input-error');
+                usernameInput.classList.add('shake');
+                isValid = false;
+                
+                // Remove shake animation after it completes
+                setTimeout(() => {
+                    usernameInput.classList.remove('shake');
+                }, 500);
+            } else {
+                usernameInput.classList.add('input-success');
+            }
+            
+            // Validasi password (NIS)
+            if (password === '' || !/^\d{5}$/.test(password)) {
+                passwordError.classList.add('show');
+                passwordInput.classList.add('input-error');
+                passwordInput.classList.add('shake');
+                isValid = false;
+                
+                // Remove shake animation after it completes
+                setTimeout(() => {
+                    passwordInput.classList.remove('shake');
+                }, 500);
+            } else {
+                passwordInput.classList.add('input-success');
+            }
+            
+            if (!isValid) {
+                // Tampilkan popup peringatan jika validasi gagal
+                showPopup('warningPopup', 'Harap isi semua field dengan format yang benar');
+                return;
+            }
+            
+            // Validasi login
+            const student = validateLogin(username, password);
+            
+            if (student) {
+                // Login berhasil
+                showPopup('successPopup', `Selamat datang ${student.name} (${student.class})`);
+                
+                // Simulasi pengalihan halaman
+                setTimeout(() => {
+                    closePopup('successPopup');
+                }, 3000);
+            } else {
+                // Login gagal
+                usernameInput.classList.remove('input-success');
+                passwordInput.classList.remove('input-success');
+                usernameInput.classList.add('input-error');
+                passwordInput.classList.add('input-error');
+                usernameInput.classList.add('shake');
+                passwordInput.classList.add('shake');
+                
+                // Tampilkan popup error
+                showPopup('errorPopup', 'Nama atau NIS tidak sesuai');
+                
+                // Remove shake animation after it completes
+                setTimeout(() => {
+                    usernameInput.classList.remove('shake');
+                    passwordInput.classList.remove('shake');
+                }, 500);
+            }
+        });
+        
+        // Menghilangkan pesan error saat user mulai mengetik
+        document.getElementById('username').addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                document.getElementById('usernameError').classList.remove('show');
+                this.classList.remove('input-error');
+            }
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            if (this.value.trim() !== '' && /^\d{5}$/.test(this.value.trim())) {
+                document.getElementById('passwordError').classList.remove('show');
+                this.classList.remove('input-error');
+            }
+        });
+
+        // Mengisi tabel data siswa saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', populateStudentTable);
+    </script>
+</body>
+</html>
